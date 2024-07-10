@@ -13,16 +13,17 @@ class CalculatorPresenter {
 
     final parsedInput = userInput.split(' ');
 
-    if (parsedInput.length != 3) {
-      throw InvalidException('입력하신 명령을 확인 후 다시 시도해주세요.');
+    if (parsedInput.length != 3 ||
+        parsedInput.any((element) => element.isEmpty)) {
+      throw InvalidException('Operand Operator Operand 형식으로 입력해주세요');
     }
 
-    final leftOperand = ExpressionParser.parseLeftOperand(parsedInput);
+    final leftOperand = ExpressionParser.parseOperand(parsedInput[0]);
     final operator = ExpressionParser.parseOperatorFromString(parsedInput);
-    final rightOperand = ExpressionParser.parseRightOperand(parsedInput);
+    final rightOperand = ExpressionParser.parseOperand(parsedInput[2]);
 
-    if (!CalculatorRepository.isValidOperator(operator)) {
-      throw InvalidException('입력하신 연산자가 유효하지 않습니다.');
+    if (!calculatorRepository.isValidOperator(operator)) {
+      throw InvalidException('입력하신 연산자($operator)가 유효하지 않습니다.');
     }
 
     final result = calculatorRepository.calculate(
