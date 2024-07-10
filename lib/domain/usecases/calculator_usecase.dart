@@ -23,6 +23,10 @@ class CalculatorUseCase implements CalculatorUseCaseImpl {
 
   @override
   double divide(double a, double b) {
+    if (b == 0) {
+      throw Exception('0 으로 나눌 수 없습니다.');
+    }
+
     return a / b;
   }
 }
